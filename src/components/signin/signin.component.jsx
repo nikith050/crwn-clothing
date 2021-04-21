@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './sign-in.styles.scss'
-import {signinWithGoogle} from '../../firebase/firebase.utils'
+import { auth, signinWithGoogle } from '../../firebase/firebase.utils'
 import FormInput from '../form-input/form-input.component'
 import CustomButton from '../custom-button/custom-button.component'
 
@@ -10,19 +10,24 @@ class SignIn extends Component {
         super()
 
         this.state = {
-
+            email: '', password: ''
         }
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
 
-        this.setState({email: '', password: ''});
+        const { email, password } = this.state
+        await auth.signInWithEmailAndPassword(
+            email,
+            password
+        )
+        this.setState({ email: '', password: '' });
     }
 
     handleChange = (event) => {
 
-        const {name, value} = event.target
+        const { name, value } = event.target
 
         this.setState({
             [name]: value
@@ -31,7 +36,7 @@ class SignIn extends Component {
 
     render() {
 
-        const {email, password} = this.state
+        const { email, password } = this.state
 
         return (
             <div className="sign-in">
@@ -39,7 +44,7 @@ class SignIn extends Component {
                 <p className="sub-title">Sign In from your email Id</p>
 
                 <form onSubmit={this.handleSubmit}>
-                    <FormInput 
+                    <FormInput
                         label="Email"
                         name="email"
                         handleChange={this.handleChange}
@@ -47,7 +52,7 @@ class SignIn extends Component {
                         value={email}
                         required
                     />
-                    <FormInput 
+                    <FormInput
                         label="Password"
                         name="password"
                         handleChange={this.handleChange}
@@ -56,17 +61,17 @@ class SignIn extends Component {
                         required
                     />
                     <div className="buttons">
-                    <CustomButton
-                        type="submit"
-                    >
-                        Sign In
+                        <CustomButton
+                            type="submit"
+                        >
+                            Sign In
                     </CustomButton>
 
-                    <CustomButton
-                        onClick={signinWithGoogle}
-                        isGoogleSignin
-                    >
-                        Sign In With Google 
+                        <CustomButton
+                            onClick={signinWithGoogle}
+                            isGoogleSignin
+                        >
+                            Sign In With Google
                     </CustomButton>
                     </div>
                 </form>
