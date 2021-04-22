@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import './App.css';
 import HomePage from './pages/homepage/homepage.component'
 import ShopPage from './pages/shop/shop.component';
+import CheckoutPage from './pages/checkout/checkout.component'
 import SignInSignUpPage from './pages/signin/signin-signup.component'
 import Header from './components/header/header.component'
 import {setCurrentUser} from './redux/user/user.actions'
@@ -45,6 +46,7 @@ class App extends React.Component {
             (<Redirect to='/' /> ):
             (<SignInSignUpPage />)
           }></Route>
+          <Route exact path='/checkout' component={CheckoutPage}></Route>
         </Switch>
       </div>
     );
